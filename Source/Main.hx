@@ -298,15 +298,12 @@ class Main extends Sprite {
 	function verifyPackage(packagePath : String, userName : String, passWord : String){
 		Sys.println("Verifying package...");
 
-		var process : Process = new Process(iTMSTransporter, ["-m", "verify", "-u", userName, "-p", passWord, "-f", packagePath]);
-		var exitCode = process.exitCode();
+		var exitCode = Sys.command(iTMSTransporter, ["-m", "verify", "-u", userName, "-p", passWord, "-f", packagePath]);
 
 		if(exitCode!= 0){
-			Sys.println("Error while verifying : " + process.stderr.readAll().toString());
-			Sys.exit(1);
+			Sys.println("Error while verifying... exit...");
+			Sys.exit(exitCode);
 		}
-
-		process.close();
 
 		Sys.println("Success!");
 	}
@@ -314,15 +311,12 @@ class Main extends Sprite {
 	function uploadPackage(packagePath : String, userName : String, passWord : String){
 		Sys.println("Uploading package...");
 
-		var process : Process = new Process(iTMSTransporter, ["-m", "upload", "-u", userName, "-p", passWord, "-f", packagePath]);
-		var exitCode = process.exitCode();
+		var exitCode = Sys.command(iTMSTransporter, ["-m", "upload", "-u", userName, "-p", passWord, "-f", packagePath]);
 
 		if(exitCode!= 0){
-			Sys.println("Error while verifying : " + process.stderr.readAll().toString());
-			Sys.exit(1);
+			Sys.println("Error while uploading... exit...");
+			Sys.exit(exitCode);
 		}
-
-		process.close();
 
 		Sys.println("Success!");
 	}
