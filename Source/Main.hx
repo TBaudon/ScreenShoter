@@ -32,6 +32,7 @@ class Main extends Sprite {
 	var mDest : String;
 	var mIphoneRes : Array<String> = ["640x960","640x1136","750x1334","1242x2208","1536x2048"];
 	var mIosMode : Bool;
+	var mLandScape : Bool;
 
 	static inline var ITUNES_FOLDER = "itunes_ScreenShots";
 	static inline var iTMSTransporter = "/Applications/Xcode.app/Contents/Applications/Application Loader.app/Contents/MacOS/itms/bin/iTMSTransporter";
@@ -67,6 +68,10 @@ class Main extends Sprite {
 
 		if(args.length > 4)
 			mBackgroundColor = Std.parseInt(args[5]);
+
+		if(args.length > 5)
+			if(args[6] == "landscape")
+				mLandScape = true;
 
 		var files : Array<String> = sys.FileSystem.readDirectory(sourcePath);
 
@@ -149,7 +154,12 @@ class Main extends Sprite {
 
 	function resize(data : BitmapData, size : Point, suffix : Int){
 
-		var resized : BitmapData = new BitmapData(Std.int(size.x), Std.int(size.y),false,mBackgroundColor);
+		var resized : BitmapData;
+		if(!mLandScape)
+			resized = new BitmapData(Std.int(size.x), Std.int(size.y),false,mBackgroundColor);
+		else
+			resized = new BitmapData(Std.int(size.y), Std.int(size.x),false,mBackgroundColor);
+
 		var clipRect : Rectangle = new Rectangle(0,0,data.width,data.height);
 
 		if(mBaseSize != null)
