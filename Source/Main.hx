@@ -343,14 +343,28 @@ class Main extends Sprite {
 		var metadata : Fast = new Fast(xml.firstElement());
 
 		// get locales
-		var versions : List<Fast> = metadata.node.software.node.software_metadata.node.versions.nodes.version;
+		var versionsNode = metadata.node.software.node.software_metadata.node.versions;
+		var versions : List<Fast> = versionsNode.nodes.version;
 		var updatedVersion : Fast = null;
+
+		var versionToRemove =new Array<Fast>();
+
 		for (version in versions){
 			var currentVersion : String = version.att.string;
-			if(currentVersion == versionToUpdate){
+			if(currentVersion == versionToUpdate)
 				updatedVersion = version;
-				break;
-			}
+			else
+				versionToRemove.push(version);
+		}
+
+		while(versionToRemove.length > 0){
+			var toRemove = versionToRemove.pop();
+			versions.remove(toRemove);
+			versionsNode.x.removeChild(toRemove.x);
+		}
+
+		if(updatedVersion == null){
+			throw "Version not found";
 		}
 
 		var locales : List<Fast> = updatedVersion.node.locales.nodes.locale;
