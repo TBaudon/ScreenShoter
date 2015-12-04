@@ -35,7 +35,7 @@ class Main extends Sprite {
 	var mLandScape : Bool;
 
 	static inline var ITUNES_FOLDER = "itunes_ScreenShots";
-	static inline var iTMSTransporter = "/Applications/Xcode.app/Contents/Applications/Application Loader.app/Contents/MacOS/itms/bin/iTMSTransporter";
+	static inline var iTMSTransporter = "/Applications/Xcode.app/Contents/Applications/Application Loader.app/Contents/itms/bin/iTMSTransporter";
 
 	var mBackgroundColor : Int = 0x000000;
 
